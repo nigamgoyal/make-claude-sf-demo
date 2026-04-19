@@ -34,7 +34,8 @@ Built as a proof-of-concept for a recruiting-workflow discussion, but the patter
 - **Guard before spend.** The If-else filter blocks Claude calls on Leads missing required inputs. No tokens burned on incomplete data.
 - **`tool_use` for output consistency.** Claude is forced to call a `save_candidate_summary` tool with a fixed `{"summary": "..."}` schema. No free-form text, no "Here's the summary:" preambles, no parsing surprises.
 - **Two-layer length protection.** `max_tokens` caps physical response size; a Make-side guard trims at the nearest sentence boundary before writing to the CRM. If the output is empty or under 20 chars (signal of malformed response), it routes to the error branch rather than writing garbage.
-- **Errors never corrupt the target field.** Transient failures (429, 5xx) use Make's native retry. Hard failures (4xx, auth) route to a dedicated error branch that logs to `AI_Integration_Log__c` — the Lead's summary field stays untouched.
+- **Errors never corrupt the target field.** Transient failures (429, 5xx) use Make's native retry. Hard failures (4xx, auth) route to a dedicated error branch that stamps `AI_Status__c = Failed` on the Lead and pushes the bundle onto Make's Incomplete Executions queue — the Lead's summary field stays untouched.
+- **Recruiter-visible state.** Every Lead carries `AI_Status__c` (`Generated` / `Failed` / `Skipped`) so recruiters see run health inline. A **Retry AI Summary** quick action on the Lead page layout lets them re-run without leaving Salesforce — no Make access required.
 - **Prompt version stamped on every write.** `AI_Prompt_Version__c` captures which prompt generated each summary. Combined with the full prompt text preserved in the change log, this gives a two-sided audit trail.
 
 ## Deploy to your own dev org
@@ -62,17 +63,17 @@ sf org assign permset --name AI_Integration_Demo --target-org claude-demo
 sf org open --target-org claude-demo
 ```
 
-Verification: Setup → Object Manager → Lead → Fields & Relationships should show the custom fields. App Launcher should list "AI Integration Logs".
+Verification: Setup → Object Manager → Lead → Fields & Relationships should show the custom fields (including `AI_Status__c`). The Lead page layout should show the **Retry AI Summary** quick action.
 
 ### Make.com scenario
 
 The manual build takes ~15 minutes. Modules:
 
-1. **Salesforce → Watch Records** (Lead, order by CreatedDate, limit 10)
-2. **If-else router** — 1st branch condition: `Job_Title__c` Exists AND `Region__c` Exists AND `AI_Candidate_Summary__c` Does not exist
+1. **Salesforce → Watch Records** (Lead, **by Updated Time**, limit 10) — watching by Updated Time is what makes the Retry button work
+2. **If-else router** — 1st branch condition: `Job_Title__c` Exists AND `Region__c` Exists AND `AI_Candidate_Summary__c` Does not exist. Else branch → Salesforce Update Lead, `AI_Status__c = Skipped`
 3. **Anthropic Claude → Make an API Call** — `POST /v1/messages`, body from `make/claude_body.json`
-4. **Salesforce → Update a Record** — write `AI_Candidate_Summary__c`, `AI_Last_Updated__c`, `AI_Prompt_Version__c`
-5. **Salesforce → Create a Record** on error handler of module 3 — write to `AI_Integration_Log__c`
+4. **Salesforce → Update a Record** on success — writes summary + timestamp + prompt version + `AI_Status__c = Generated`
+5. On Claude **error handler** → Salesforce Update Lead, `AI_Status__c = Failed` → `Break` directive (sends bundle to Incomplete Executions for operator review)
 
 See `docs/change_log/` for the complete prompt text and parameter details.
 

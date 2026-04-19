@@ -9,7 +9,7 @@
                 "restore": {
                     "parameters": {
                         "select": {
-                            "label": "By Created Time"
+                            "label": "By Updated Time"
                         },
                         "sObject": {
                             "label": "Lead"
@@ -389,6 +389,41 @@
                         "name": "AI_Prompt_Version__c",
                         "type": "text",
                         "label": "AI Prompt Version"
+                    },
+                    {
+                        "name": "Job_Title__c",
+                        "type": "text",
+                        "label": "Job Title"
+                    },
+                    {
+                        "name": "Region__c",
+                        "type": "text",
+                        "label": "Region"
+                    },
+                    {
+                        "name": "Availability_Weeks__c",
+                        "type": "number",
+                        "label": "Availability (Weeks)"
+                    },
+                    {
+                        "name": "German_Level__c",
+                        "type": "text",
+                        "label": "German Level"
+                    },
+                    {
+                        "name": "Skills__c",
+                        "type": "text",
+                        "label": "Skills"
+                    },
+                    {
+                        "name": "Years_Experience__c",
+                        "type": "number",
+                        "label": "Years Experience"
+                    },
+                    {
+                        "name": "AI_Status__c",
+                        "type": "text",
+                        "label": "AI Status"
                     }
                 ],
                 "parameters": [
@@ -426,7 +461,7 @@
             },
             "parameters": {
                 "limit": 10,
-                "select": "create",
+                "select": "update",
                 "sObject": "Lead",
                 "__IMTCONN__": 0
             }
@@ -442,7 +477,7 @@
                         {
                             "id": 10,
                             "mapper": {
-                                "url": "/v1/messages",
+                                "url": "v1/messages",
                                 "body": "{\"model\":\"claude-haiku-4-5\",\"max_tokens\":1024,\"temperature\":0.3,\"system\":\"You help Recruiting Now account managers triage new job applicants from regional job portals in southern Germany. Generate a short internal triage summary (2-3 sentences, max 1900 chars, professional English, third person, no markdown, no bullets, no first-person) that lets a recruiter decide in 5 seconds whether to prioritize, queue, or decline. Weigh in this order: (1) fit between current background and applied role, (2) regional fit via source portal, (3) practical constraints (German language is important for Mittelstand SMEs; B2 or below is a constraint; plus notice period), (4) red flags or data gaps. Say 'not specified' when data is missing. Neutral, factual, no sales language, do not sugar-coat mismatches. Call the save_candidate_summary tool only. No other output.\",\"tools\":[{\"name\":\"save_candidate_summary\",\"description\":\"Save a triage summary to the CRM.\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"summary\":{\"type\":\"string\",\"description\":\"2-3 sentence triage summary, max 1900 chars, third person, no markdown.\"}},\"required\":[\"summary\"]}}],\"tool_choice\":{\"type\":\"tool\",\"name\":\"save_candidate_summary\"},\"messages\":[{\"role\":\"user\",\"content\":\"Generate a triage summary. Name: {{1.FirstName}} {{1.LastName}}. Current role: {{1.Title}} at {{1.Company}}. Experience: {{1.Years_Experience__c}} years. Skills: {{1.Skills__c}}. Availability: {{1.Availability_Weeks__c}} weeks. German level: {{1.German_Level__c}}. Applied for: {{1.Job_Title__c}} via {{1.Region__c}} portal.\"}]}",
                                 "method": "POST",
                                 "headers": [
@@ -455,19 +490,18 @@
                             "module": "anthropic-claude:makeAnApiCall",
                             "onerror": [
                                 {
-                                    "id": 26,
+                                    "id": 29,
+                                    "filter": null,
                                     "mapper": {
                                         "fields": {
                                             "custom_fields": {
-                                                "lead__c": "{{1.Id}}",
-                                                "error_Body__c": "{{10.error.message}}",
-                                                "request_ID__c": " {{executionUUID}}-{{1.}}{{Lead}}{{ID}} ",
-                                                "scenario_Run_ID__c": "{{executionUUID}}"
+                                                "aI_Status__c": "Failed"
                                             }
                                         },
-                                        "sObject": "AI_Integration_Log__c"
+                                        "record": "{{1.Id}}",
+                                        "sObject": "Lead"
                                     },
-                                    "module": "salesforce:createAResponsibleRecord",
+                                    "module": "salesforce:updateARecord",
                                     "version": 3,
                                     "metadata": {
                                         "expect": [
@@ -478,8 +512,238 @@
                                                 "required": true
                                             },
                                             {
+                                                "name": "record",
+                                                "type": "text",
+                                                "label": "Record ID",
+                                                "required": true
+                                            },
+                                            {
                                                 "name": "fields",
                                                 "spec": [
+                                                    {
+                                                        "name": "lastName",
+                                                        "type": "text",
+                                                        "label": "Last Name (LastName)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "firstName",
+                                                        "type": "text",
+                                                        "label": "First Name (FirstName)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "salutation",
+                                                        "type": "select",
+                                                        "label": "Salutation (Salutation)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "type": "text",
+                                                        "label": "Title (Title)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "company",
+                                                        "type": "text",
+                                                        "label": "Company (Company)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "street",
+                                                        "type": "text",
+                                                        "label": "Street (Street)",
+                                                        "metadata": {
+                                                            "type": "textarea"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "city",
+                                                        "type": "text",
+                                                        "label": "City (City)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "state",
+                                                        "type": "text",
+                                                        "label": "State/Province (State)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "postalCode",
+                                                        "type": "text",
+                                                        "label": "Zip/Postal Code (PostalCode)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "country",
+                                                        "type": "text",
+                                                        "label": "Country (Country)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "stateCode",
+                                                        "type": "select",
+                                                        "label": "State/Province Code (StateCode)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "countryCode",
+                                                        "type": "select",
+                                                        "label": "Country Code (CountryCode)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "latitude",
+                                                        "type": "number",
+                                                        "label": "Latitude (Latitude)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "longitude",
+                                                        "type": "number",
+                                                        "label": "Longitude (Longitude)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "geocodeAccuracy",
+                                                        "type": "select",
+                                                        "label": "Geocode Accuracy (GeocodeAccuracy)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "phone",
+                                                        "type": "text",
+                                                        "label": "Phone (Phone)",
+                                                        "metadata": {
+                                                            "type": "phone"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "mobilePhone",
+                                                        "type": "text",
+                                                        "label": "Mobile Phone (MobilePhone)",
+                                                        "metadata": {
+                                                            "type": "phone"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "fax",
+                                                        "type": "text",
+                                                        "label": "Fax (Fax)",
+                                                        "metadata": {
+                                                            "type": "phone"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "email",
+                                                        "type": "email",
+                                                        "label": "Email (Email)",
+                                                        "metadata": {
+                                                            "type": "email"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "website",
+                                                        "type": "url",
+                                                        "label": "Website (Website)",
+                                                        "metadata": {
+                                                            "type": "url"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "description",
+                                                        "type": "text",
+                                                        "label": "Description (Description)",
+                                                        "metadata": {
+                                                            "type": "textarea"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "leadSource",
+                                                        "type": "select",
+                                                        "label": "Lead Source (LeadSource)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "status",
+                                                        "type": "select",
+                                                        "label": "Status (Status)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "industry",
+                                                        "type": "select",
+                                                        "label": "Industry (Industry)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "rating",
+                                                        "type": "select",
+                                                        "label": "Rating (Rating)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "annualRevenue",
+                                                        "type": "number",
+                                                        "label": "Annual Revenue (AnnualRevenue)",
+                                                        "metadata": {
+                                                            "type": "currency"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "numberOfEmployees",
+                                                        "type": "number",
+                                                        "label": "Employees (NumberOfEmployees)",
+                                                        "metadata": {
+                                                            "type": "int"
+                                                        }
+                                                    },
                                                     {
                                                         "name": "ownerId",
                                                         "type": "text",
@@ -489,52 +753,216 @@
                                                         }
                                                     },
                                                     {
+                                                        "name": "isConverted",
+                                                        "type": "boolean",
+                                                        "label": "Converted (IsConverted)",
+                                                        "metadata": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "isUnreadByOwner",
+                                                        "type": "boolean",
+                                                        "label": "Unread By Owner (IsUnreadByOwner)",
+                                                        "metadata": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "jigsaw",
+                                                        "type": "text",
+                                                        "label": "Data.com Key (Jigsaw)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "cleanStatus",
+                                                        "type": "select",
+                                                        "label": "Clean Status (CleanStatus)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "companyDunsNumber",
+                                                        "type": "text",
+                                                        "label": "Company D-U-N-S Number (CompanyDunsNumber)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "dandbCompanyId",
+                                                        "type": "select",
+                                                        "label": "D&B Company ID (DandbCompanyId)",
+                                                        "metadata": {
+                                                            "type": "reference"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "emailBouncedReason",
+                                                        "type": "text",
+                                                        "label": "Email Bounced Reason (EmailBouncedReason)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "emailBouncedDate",
+                                                        "type": "date",
+                                                        "label": "Email Bounced Date (EmailBouncedDate)",
+                                                        "metadata": {
+                                                            "type": "datetime"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "individualId",
+                                                        "type": "select",
+                                                        "label": "Individual ID (IndividualId)",
+                                                        "metadata": {
+                                                            "type": "reference"
+                                                        }
+                                                    },
+                                                    {
                                                         "name": "custom_fields",
                                                         "spec": [
                                                             {
-                                                                "name": "error_Body__c",
+                                                                "name": "sICCode__c",
                                                                 "type": "text",
-                                                                "label": "Error Body (Error_Body__c)",
-                                                                "metadata": {
-                                                                    "type": "textarea"
-                                                                }
-                                                            },
-                                                            {
-                                                                "name": "error_Code__c",
-                                                                "type": "text",
-                                                                "label": "Error Code (Error_Code__c)",
+                                                                "label": "SIC Code (SICCode__c)",
                                                                 "metadata": {
                                                                     "type": "string"
                                                                 }
                                                             },
                                                             {
                                                                 "mode": "edit",
-                                                                "name": "lead__c",
+                                                                "name": "productInterest__c",
                                                                 "type": "select",
-                                                                "label": "Lead (Lead__c)",
+                                                                "label": "Product Interest (ProductInterest__c)",
                                                                 "metadata": {
-                                                                    "type": "reference"
+                                                                    "type": "picklist"
                                                                 }
                                                             },
                                                             {
-                                                                "name": "request_ID__c",
+                                                                "mode": "edit",
+                                                                "name": "primary__c",
+                                                                "type": "select",
+                                                                "label": "Primary (Primary__c)",
+                                                                "metadata": {
+                                                                    "type": "picklist"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "currentGenerators__c",
                                                                 "type": "text",
-                                                                "label": "Request ID (Request_ID__c)",
+                                                                "label": "Current Generator(s) (CurrentGenerators__c)",
                                                                 "metadata": {
                                                                     "type": "string"
                                                                 }
                                                             },
                                                             {
-                                                                "name": "scenario_Run_ID__c",
+                                                                "name": "numberofLocations__c",
+                                                                "type": "number",
+                                                                "label": "Number of Locations (NumberofLocations__c)",
+                                                                "metadata": {
+                                                                    "type": "double"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "aI_Candidate_Summary__c",
                                                                 "type": "text",
-                                                                "label": "Scenario Run ID (Scenario_Run_ID__c)",
+                                                                "label": "AI Candidate Summary (AI_Candidate_Summary__c)",
+                                                                "metadata": {
+                                                                    "type": "textarea"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "aI_Last_Updated__c",
+                                                                "type": "date",
+                                                                "label": "AI Last Updated (AI_Last_Updated__c)",
+                                                                "metadata": {
+                                                                    "type": "datetime"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "aI_Prompt_Version__c",
+                                                                "type": "text",
+                                                                "label": "AI Prompt Version (AI_Prompt_Version__c)",
                                                                 "metadata": {
                                                                     "type": "string"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "job_Title__c",
+                                                                "type": "text",
+                                                                "label": "Job Title (Job_Title__c)",
+                                                                "metadata": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            {
+                                                                "mode": "edit",
+                                                                "name": "region__c",
+                                                                "type": "select",
+                                                                "label": "Region (Region__c)",
+                                                                "metadata": {
+                                                                    "type": "picklist"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "availability_Weeks__c",
+                                                                "type": "number",
+                                                                "label": "Availability (Weeks) (Availability_Weeks__c)",
+                                                                "metadata": {
+                                                                    "type": "double"
+                                                                }
+                                                            },
+                                                            {
+                                                                "mode": "edit",
+                                                                "name": "german_Level__c",
+                                                                "type": "select",
+                                                                "label": "German Level (German_Level__c)",
+                                                                "metadata": {
+                                                                    "type": "picklist"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "skills__c",
+                                                                "type": "text",
+                                                                "label": "Skills (Skills__c)",
+                                                                "metadata": {
+                                                                    "type": "textarea"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "years_Experience__c",
+                                                                "type": "number",
+                                                                "label": "Years Experience (Years_Experience__c)",
+                                                                "metadata": {
+                                                                    "type": "double"
+                                                                }
+                                                            },
+                                                            {
+                                                                "mode": "edit",
+                                                                "name": "aI_Status__c",
+                                                                "type": "select",
+                                                                "label": "AI Status (AI_Status__c)",
+                                                                "metadata": {
+                                                                    "type": "picklist"
                                                                 }
                                                             }
                                                         ],
                                                         "type": "collection",
                                                         "label": "Custom Fields"
+                                                    },
+                                                    {
+                                                        "name": "autoAssign",
+                                                        "type": "boolean",
+                                                        "label": "Salesforce Auto Assign"
                                                     }
                                                 ],
                                                 "type": "collection",
@@ -545,17 +973,71 @@
                                             "expect": {
                                                 "fields": {
                                                     "nested": {
+                                                        "rating": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "status": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "industry": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "stateCode": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "autoAssign": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "leadSource": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "salutation": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "cleanStatus": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "countryCode": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "isConverted": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "individualId": {
+                                                            "mode": "edit"
+                                                        },
                                                         "custom_fields": {
                                                             "nested": {
-                                                                "lead__c": {
+                                                                "region__c": {
+                                                                    "mode": "edit"
+                                                                },
+                                                                "primary__c": {
+                                                                    "mode": "edit"
+                                                                },
+                                                                "aI_Status__c": {
+                                                                    "mode": "edit"
+                                                                },
+                                                                "german_Level__c": {
+                                                                    "mode": "edit"
+                                                                },
+                                                                "productInterest__c": {
                                                                     "mode": "edit"
                                                                 }
                                                             }
+                                                        },
+                                                        "dandbCompanyId": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "geocodeAccuracy": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "isUnreadByOwner": {
+                                                            "mode": "chose"
                                                         }
                                                     }
                                                 },
                                                 "sObject": {
-                                                    "label": "AI Integration Log"
+                                                    "label": "Lead"
                                                 }
                                             },
                                             "parameters": {
@@ -569,8 +1051,8 @@
                                             }
                                         },
                                         "designer": {
-                                            "x": 857,
-                                            "y": 283
+                                            "x": 874,
+                                            "y": 264
                                         },
                                         "parameters": [
                                             {
@@ -631,8 +1113,8 @@
                                             }
                                         },
                                         "designer": {
-                                            "x": 1148,
-                                            "y": 431
+                                            "x": 1156,
+                                            "y": 407
                                         }
                                     },
                                     "parameters": {}
@@ -739,8 +1221,8 @@
                                     }
                                 },
                                 "designer": {
-                                    "x": 600,
-                                    "y": 150
+                                    "x": 573,
+                                    "y": 151
                                 },
                                 "parameters": [
                                     {
@@ -760,6 +1242,7 @@
                             "mapper": {
                                 "fields": {
                                     "custom_fields": {
+                                        "aI_Status__c": "Generated",
                                         "aI_Last_Updated__c": "{{now}}",
                                         "aI_Prompt_Version__c": "v2026-04-19-a-triage",
                                         "aI_Candidate_Summary__c": "{{10.body.content[].input.summary}}"
@@ -1212,6 +1695,15 @@
                                                         "metadata": {
                                                             "type": "double"
                                                         }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "aI_Status__c",
+                                                        "type": "select",
+                                                        "label": "AI Status (AI_Status__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
                                                     }
                                                 ],
                                                 "type": "collection",
@@ -1270,6 +1762,9 @@
                                                             "mode": "edit"
                                                         },
                                                         "primary__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "aI_Status__c": {
                                                             "mode": "edit"
                                                         },
                                                         "german_Level__c": {
@@ -1348,12 +1843,579 @@
                         {
                             "id": 9,
                             "filter": null,
-                            "module": "placeholder:Placeholder",
+                            "mapper": {
+                                "fields": {
+                                    "custom_fields": {
+                                        "aI_Status__c": "Skipped"
+                                    }
+                                },
+                                "record": "{{1.Id}}",
+                                "sObject": "Lead"
+                            },
+                            "module": "salesforce:updateARecord",
+                            "version": 3,
                             "metadata": {
+                                "expect": [
+                                    {
+                                        "name": "sObject",
+                                        "type": "select",
+                                        "label": "Type",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "record",
+                                        "type": "text",
+                                        "label": "Record ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "fields",
+                                        "spec": [
+                                            {
+                                                "name": "lastName",
+                                                "type": "text",
+                                                "label": "Last Name (LastName)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "firstName",
+                                                "type": "text",
+                                                "label": "First Name (FirstName)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "salutation",
+                                                "type": "select",
+                                                "label": "Salutation (Salutation)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "title",
+                                                "type": "text",
+                                                "label": "Title (Title)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "company",
+                                                "type": "text",
+                                                "label": "Company (Company)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "street",
+                                                "type": "text",
+                                                "label": "Street (Street)",
+                                                "metadata": {
+                                                    "type": "textarea"
+                                                }
+                                            },
+                                            {
+                                                "name": "city",
+                                                "type": "text",
+                                                "label": "City (City)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "state",
+                                                "type": "text",
+                                                "label": "State/Province (State)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "postalCode",
+                                                "type": "text",
+                                                "label": "Zip/Postal Code (PostalCode)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "country",
+                                                "type": "text",
+                                                "label": "Country (Country)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "stateCode",
+                                                "type": "select",
+                                                "label": "State/Province Code (StateCode)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "countryCode",
+                                                "type": "select",
+                                                "label": "Country Code (CountryCode)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "latitude",
+                                                "type": "number",
+                                                "label": "Latitude (Latitude)",
+                                                "metadata": {
+                                                    "type": "double"
+                                                }
+                                            },
+                                            {
+                                                "name": "longitude",
+                                                "type": "number",
+                                                "label": "Longitude (Longitude)",
+                                                "metadata": {
+                                                    "type": "double"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "geocodeAccuracy",
+                                                "type": "select",
+                                                "label": "Geocode Accuracy (GeocodeAccuracy)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "phone",
+                                                "type": "text",
+                                                "label": "Phone (Phone)",
+                                                "metadata": {
+                                                    "type": "phone"
+                                                }
+                                            },
+                                            {
+                                                "name": "mobilePhone",
+                                                "type": "text",
+                                                "label": "Mobile Phone (MobilePhone)",
+                                                "metadata": {
+                                                    "type": "phone"
+                                                }
+                                            },
+                                            {
+                                                "name": "fax",
+                                                "type": "text",
+                                                "label": "Fax (Fax)",
+                                                "metadata": {
+                                                    "type": "phone"
+                                                }
+                                            },
+                                            {
+                                                "name": "email",
+                                                "type": "email",
+                                                "label": "Email (Email)",
+                                                "metadata": {
+                                                    "type": "email"
+                                                }
+                                            },
+                                            {
+                                                "name": "website",
+                                                "type": "url",
+                                                "label": "Website (Website)",
+                                                "metadata": {
+                                                    "type": "url"
+                                                }
+                                            },
+                                            {
+                                                "name": "description",
+                                                "type": "text",
+                                                "label": "Description (Description)",
+                                                "metadata": {
+                                                    "type": "textarea"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "leadSource",
+                                                "type": "select",
+                                                "label": "Lead Source (LeadSource)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "status",
+                                                "type": "select",
+                                                "label": "Status (Status)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "industry",
+                                                "type": "select",
+                                                "label": "Industry (Industry)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "rating",
+                                                "type": "select",
+                                                "label": "Rating (Rating)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "annualRevenue",
+                                                "type": "number",
+                                                "label": "Annual Revenue (AnnualRevenue)",
+                                                "metadata": {
+                                                    "type": "currency"
+                                                }
+                                            },
+                                            {
+                                                "name": "numberOfEmployees",
+                                                "type": "number",
+                                                "label": "Employees (NumberOfEmployees)",
+                                                "metadata": {
+                                                    "type": "int"
+                                                }
+                                            },
+                                            {
+                                                "name": "ownerId",
+                                                "type": "text",
+                                                "label": "Owner ID (OwnerId)",
+                                                "metadata": {
+                                                    "type": "reference"
+                                                }
+                                            },
+                                            {
+                                                "name": "isConverted",
+                                                "type": "boolean",
+                                                "label": "Converted (IsConverted)",
+                                                "metadata": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            {
+                                                "name": "isUnreadByOwner",
+                                                "type": "boolean",
+                                                "label": "Unread By Owner (IsUnreadByOwner)",
+                                                "metadata": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            {
+                                                "name": "jigsaw",
+                                                "type": "text",
+                                                "label": "Data.com Key (Jigsaw)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "cleanStatus",
+                                                "type": "select",
+                                                "label": "Clean Status (CleanStatus)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "companyDunsNumber",
+                                                "type": "text",
+                                                "label": "Company D-U-N-S Number (CompanyDunsNumber)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "dandbCompanyId",
+                                                "type": "select",
+                                                "label": "D&B Company ID (DandbCompanyId)",
+                                                "metadata": {
+                                                    "type": "reference"
+                                                }
+                                            },
+                                            {
+                                                "name": "emailBouncedReason",
+                                                "type": "text",
+                                                "label": "Email Bounced Reason (EmailBouncedReason)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "emailBouncedDate",
+                                                "type": "date",
+                                                "label": "Email Bounced Date (EmailBouncedDate)",
+                                                "metadata": {
+                                                    "type": "datetime"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "individualId",
+                                                "type": "select",
+                                                "label": "Individual ID (IndividualId)",
+                                                "metadata": {
+                                                    "type": "reference"
+                                                }
+                                            },
+                                            {
+                                                "name": "custom_fields",
+                                                "spec": [
+                                                    {
+                                                        "name": "sICCode__c",
+                                                        "type": "text",
+                                                        "label": "SIC Code (SICCode__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "productInterest__c",
+                                                        "type": "select",
+                                                        "label": "Product Interest (ProductInterest__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "primary__c",
+                                                        "type": "select",
+                                                        "label": "Primary (Primary__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "currentGenerators__c",
+                                                        "type": "text",
+                                                        "label": "Current Generator(s) (CurrentGenerators__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "numberofLocations__c",
+                                                        "type": "number",
+                                                        "label": "Number of Locations (NumberofLocations__c)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "aI_Candidate_Summary__c",
+                                                        "type": "text",
+                                                        "label": "AI Candidate Summary (AI_Candidate_Summary__c)",
+                                                        "metadata": {
+                                                            "type": "textarea"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "aI_Last_Updated__c",
+                                                        "type": "date",
+                                                        "label": "AI Last Updated (AI_Last_Updated__c)",
+                                                        "metadata": {
+                                                            "type": "datetime"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "aI_Prompt_Version__c",
+                                                        "type": "text",
+                                                        "label": "AI Prompt Version (AI_Prompt_Version__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "job_Title__c",
+                                                        "type": "text",
+                                                        "label": "Job Title (Job_Title__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "region__c",
+                                                        "type": "select",
+                                                        "label": "Region (Region__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "availability_Weeks__c",
+                                                        "type": "number",
+                                                        "label": "Availability (Weeks) (Availability_Weeks__c)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "german_Level__c",
+                                                        "type": "select",
+                                                        "label": "German Level (German_Level__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "skills__c",
+                                                        "type": "text",
+                                                        "label": "Skills (Skills__c)",
+                                                        "metadata": {
+                                                            "type": "textarea"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "years_Experience__c",
+                                                        "type": "number",
+                                                        "label": "Years Experience (Years_Experience__c)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "aI_Status__c",
+                                                        "type": "select",
+                                                        "label": "AI Status (AI_Status__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Custom Fields"
+                                            },
+                                            {
+                                                "name": "autoAssign",
+                                                "type": "boolean",
+                                                "label": "Salesforce Auto Assign"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Fields"
+                                    }
+                                ],
+                                "restore": {
+                                    "expect": {
+                                        "fields": {
+                                            "nested": {
+                                                "rating": {
+                                                    "mode": "edit"
+                                                },
+                                                "status": {
+                                                    "mode": "edit"
+                                                },
+                                                "industry": {
+                                                    "mode": "edit"
+                                                },
+                                                "stateCode": {
+                                                    "mode": "edit"
+                                                },
+                                                "autoAssign": {
+                                                    "mode": "chose"
+                                                },
+                                                "leadSource": {
+                                                    "mode": "edit"
+                                                },
+                                                "salutation": {
+                                                    "mode": "edit"
+                                                },
+                                                "cleanStatus": {
+                                                    "mode": "edit"
+                                                },
+                                                "countryCode": {
+                                                    "mode": "edit"
+                                                },
+                                                "isConverted": {
+                                                    "mode": "chose"
+                                                },
+                                                "individualId": {
+                                                    "mode": "edit"
+                                                },
+                                                "custom_fields": {
+                                                    "nested": {
+                                                        "region__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "primary__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "aI_Status__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "german_Level__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "productInterest__c": {
+                                                            "mode": "edit"
+                                                        }
+                                                    }
+                                                },
+                                                "dandbCompanyId": {
+                                                    "mode": "edit"
+                                                },
+                                                "geocodeAccuracy": {
+                                                    "mode": "edit"
+                                                },
+                                                "isUnreadByOwner": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "sObject": {
+                                            "label": "Lead"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "salesforce"
+                                            },
+                                            "label": "<SF_CONNECTION>"
+                                        }
+                                    }
+                                },
                                 "designer": {
                                     "x": 600,
                                     "y": 600
-                                }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:salesforce,salesforce2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "parameters": {
+                                "__IMTCONN__": 0
                             }
                         }
                     ],
@@ -1434,9 +2496,9 @@
                     "AnnualRevenue": null,
                     "ConvertedDate": null,
                     "DandbCompanyId": null,
-                    "LastViewedDate": "2026-04-19T15:32:44.000Z",
+                    "LastViewedDate": "2026-04-19T18:32:04.000Z",
                     "MasterRecordId": null,
-                    "SystemModstamp": "2026-04-19T15:32:43.000Z",
+                    "SystemModstamp": "2026-04-19T18:09:31.000Z",
                     "GeocodeAccuracy": null,
                     "German_Level__c": "Native",
                     "IsUnreadByOwner": false,
@@ -1444,14 +2506,14 @@
                     "EmailBouncedDate": null,
                     "LastActivityDate": null,
                     "LastModifiedById": "005dM00000ZonUPQAZ",
-                    "LastModifiedDate": "2026-04-19T15:32:43.000Z",
+                    "LastModifiedDate": "2026-04-19T18:09:31.000Z",
                     "CompanyDunsNumber": null,
                     "NumberOfEmployees": null,
                     "AI_Last_Updated__c": null,
                     "ConvertedAccountId": null,
                     "ConvertedContactId": null,
                     "EmailBouncedReason": null,
-                    "LastReferencedDate": "2026-04-19T15:32:44.000Z",
+                    "LastReferencedDate": "2026-04-19T18:32:04.000Z",
                     "ProductInterest__c": null,
                     "Years_Experience__c": 7,
                     "AI_Prompt_Version__c": null,
@@ -1539,7 +2601,7 @@
             "maxErrors": 3,
             "autoCommit": true,
             "roundtrips": 1,
-            "sequential": true,
+            "sequential": false,
             "confidential": false,
             "freshVariables": false,
             "autoCommitTriggerLast": true

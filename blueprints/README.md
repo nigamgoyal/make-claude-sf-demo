@@ -23,11 +23,11 @@ No API keys are present in this file.
 
 ### What the scenario does
 
-- Watches `Lead` on create in Salesforce (limit 10 per run, ordered by CreatedDate)
-- Routes through an If-else guard: only calls Claude when `Job_Title__c` and `Region__c` are both populated and `AI_Candidate_Summary__c` is empty
+- Watches `Lead` in Salesforce **by Updated Time** (limit 10 per run) — updated-time watching is what makes the Salesforce "Retry AI Summary" quick action work
+- Routes through an If-else guard: only calls Claude when `Job_Title__c` and `Region__c` are both populated and `AI_Candidate_Summary__c` is empty. Else branch stamps `AI_Status__c = Skipped` on the Lead.
 - Calls Anthropic Messages API with `tool_use` forcing a `save_candidate_summary` response schema
-- Updates the Lead with summary, timestamp, and prompt version on success
-- On any Claude API error, writes a row to `AI_Integration_Log__c` with request ID, error body, and Lead reference — without touching the Lead's summary field
+- Updates the Lead with summary, timestamp, prompt version, and `AI_Status__c = Generated` on success
+- On any Claude API error, stamps `AI_Status__c = Failed` on the Lead and issues a `Break` — pushes the bundle to Make's Incomplete Executions queue for operator review. The Lead's summary field is never touched on error.
 
 See the main repo `README.md` for architecture and the `docs/change_log/` entry for prompt details + parameters.
 
