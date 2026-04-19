@@ -15,8 +15,12 @@
 # Local env / secrets — just in case something lands here later
 .env
 .env.*
+!.env.example
 *.pem
 *.p8
+
+# Client-specific drafts that shouldn't be public
+docs/peter_upwork_message.txt
 
 # Node (in case scripts get added)
 node_modules/
