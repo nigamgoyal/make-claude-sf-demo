@@ -1,0 +1,425 @@
+{
+    "name": "Integration Salesforce",
+    "flow": [
+        {
+            "id": 1,
+            "module": "salesforce:watchRecords",
+            "version": 3,
+            "parameters": {
+                "limit": 10,
+                "select": "create",
+                "sObject": "Lead",
+                "__IMTCONN__": 0
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "select": {
+                            "label": "By Created Time"
+                        },
+                        "sObject": {
+                            "label": "Lead"
+                        },
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "salesforce"
+                            },
+                            "label": "<SF_CONNECTION>"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:salesforce,salesforce2",
+                        "label": "Connection",
+                        "required": true
+                    },
+                    {
+                        "name": "select",
+                        "type": "select",
+                        "label": "Watch Records",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "create",
+                                "update"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "sObject",
+                        "type": "select",
+                        "label": "Type",
+                        "required": true
+                    },
+                    {
+                        "name": "limit",
+                        "type": "uinteger",
+                        "label": "Limit",
+                        "required": true
+                    }
+                ],
+                "interface": [
+                    {"name": "Id", "type": "text", "label": "Lead ID"},
+                    {"name": "FirstName", "type": "text", "label": "First Name"},
+                    {"name": "LastName", "type": "text", "label": "Last Name"},
+                    {"name": "Title", "type": "text", "label": "Title"},
+                    {"name": "Company", "type": "text", "label": "Company"},
+                    {"name": "Country", "type": "text", "label": "Country"},
+                    {"name": "LeadSource", "type": "text", "label": "Lead Source"},
+                    {"name": "Status", "type": "text", "label": "Status"},
+                    {"name": "CreatedDate", "type": "date", "label": "Created Date"},
+                    {"name": "AI_Candidate_Summary__c", "type": "text", "label": "AI Candidate Summary"},
+                    {"name": "AI_Last_Updated__c", "type": "date", "label": "AI Last Updated"},
+                    {"name": "AI_Prompt_Version__c", "type": "text", "label": "AI Prompt Version"},
+                    {"name": "Job_Title__c", "type": "text", "label": "Job Title"},
+                    {"name": "Region__c", "type": "text", "label": "Region"},
+                    {"name": "Years_Experience__c", "type": "number", "label": "Years Experience"},
+                    {"name": "Skills__c", "type": "text", "label": "Skills"},
+                    {"name": "Availability_Weeks__c", "type": "number", "label": "Availability (Weeks)"},
+                    {"name": "German_Level__c", "type": "text", "label": "German Level"}
+                ]
+            }
+        },
+        {
+            "id": 8,
+            "module": "builtin:BasicIfElse",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                }
+            },
+            "branches": [
+                {
+                    "merge": false,
+                    "label": "Required inputs present",
+                    "type": "condition",
+                    "flow": [
+                        {
+                            "id": 10,
+                            "module": "anthropic-claude:makeAnApiCall",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 0
+                            },
+                            "mapper": {
+                                "url": "/v1/messages",
+                                "method": "POST",
+                                "headers": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                    }
+                                ],
+                                "body": "{\"model\":\"claude-haiku-4-5\",\"max_tokens\":1024,\"temperature\":0.3,\"system\":\"You help Recruiting Now account managers triage new job applicants from regional job portals in southern Germany. Generate a short internal triage summary (2-3 sentences, max 1900 chars, professional English, third person, no markdown, no bullets, no first-person) that lets a recruiter decide in 5 seconds whether to prioritize, queue, or decline. Weigh in this order: (1) fit between current background and applied role, (2) regional fit via source portal, (3) practical constraints (German language is important for Mittelstand SMEs; B2 or below is a constraint; plus notice period), (4) red flags or data gaps. Say 'not specified' when data is missing. Neutral, factual, no sales language, do not sugar-coat mismatches. Call the save_candidate_summary tool only. No other output.\",\"tools\":[{\"name\":\"save_candidate_summary\",\"description\":\"Save a triage summary to the CRM.\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"summary\":{\"type\":\"string\",\"description\":\"2-3 sentence triage summary, max 1900 chars, third person, no markdown.\"}},\"required\":[\"summary\"]}}],\"tool_choice\":{\"type\":\"tool\",\"name\":\"save_candidate_summary\"},\"messages\":[{\"role\":\"user\",\"content\":\"Generate a triage summary. Name: {{1.FirstName}} {{1.LastName}}. Current role: {{1.Title}} at {{1.Company}}. Experience: {{1.Years_Experience__c}} years. Skills: {{1.Skills__c}}. Availability: {{1.Availability_Weeks__c}} weeks. German level: {{1.German_Level__c}}. Applied for: {{1.Job_Title__c}} via {{1.Region__c}} portal.\"}]}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": -300
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "<ANTHROPIC_CONNECTION>",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "anthropic-claude"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "POST"
+                                        },
+                                        "headers": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        },
+                                        "qs": {
+                                            "mode": "chose"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:anthropic-claude",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {"name": "url", "type": "text", "label": "URL", "required": true},
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "type": "array",
+                                        "label": "Headers",
+                                        "spec": {
+                                            "spec": [
+                                                {"name": "key", "type": "text", "label": "Key"},
+                                                {"name": "value", "type": "text", "label": "Value"}
+                                            ],
+                                            "type": "collection",
+                                            "label": "Header",
+                                            "name": "value"
+                                        }
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "type": "array",
+                                        "label": "Query String",
+                                        "spec": {
+                                            "spec": [
+                                                {"name": "key", "type": "text", "label": "Key"},
+                                                {"name": "value", "type": "text", "label": "Value"}
+                                            ],
+                                            "type": "collection",
+                                            "label": "Parameter",
+                                            "name": "value"
+                                        }
+                                    },
+                                    {"name": "body", "type": "any", "label": "Body"}
+                                ]
+                            },
+                            "onerror": [
+                                {
+                                    "id": 17,
+                                    "module": "salesforce:createAResponsibleRecord",
+                                    "version": 3,
+                                    "parameters": {
+                                        "__IMTCONN__": 0
+                                    },
+                                    "mapper": {
+                                        "sObject": "AI_Integration_Log__c",
+                                        "fields": {
+                                            "custom_fields": {
+                                                "error_Body__c": "{{10.error.message}}",
+                                                "error_Code__c": " ",
+                                                "lead__c": "{{1.Id}}",
+                                                "request_ID__c": "{{executionUUID}}-{{1.Id}}",
+                                                "scenario_Run_ID__c": "{{executionUUID}}       "
+                                            }
+                                        }
+                                    },
+                                    "metadata": {
+                                        "designer": {
+                                            "x": 900,
+                                            "y": -150
+                                        },
+                                        "restore": {
+                                            "parameters": {
+                                                "__IMTCONN__": {
+                                                    "label": "<SF_CONNECTION>",
+                                                    "data": {
+                                                        "scoped": "true",
+                                                        "connection": "salesforce"
+                                                    }
+                                                }
+                                            },
+                                            "expect": {
+                                                "sObject": {
+                                                    "label": "AI Integration Log"
+                                                },
+                                                "fields": {
+                                                    "nested": {
+                                                        "custom_fields": {
+                                                            "nested": {
+                                                                "lead__c": {
+                                                                    "mode": "edit"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "parameters": [
+                                            {
+                                                "name": "__IMTCONN__",
+                                                "type": "account:salesforce,salesforce2",
+                                                "label": "Connection",
+                                                "required": true
+                                            }
+                                        ],
+                                        "expect": [
+                                            {"name": "sObject", "type": "select", "label": "Type", "required": true},
+                                            {
+                                                "name": "fields",
+                                                "type": "collection",
+                                                "label": "Fields",
+                                                "spec": [
+                                                    {"name": "ownerId", "type": "text", "label": "Owner ID (OwnerId)", "metadata": {"type": "reference"}},
+                                                    {
+                                                        "name": "custom_fields",
+                                                        "type": "collection",
+                                                        "label": "Custom Fields",
+                                                        "spec": [
+                                                            {"name": "error_Body__c", "type": "text", "label": "Error Body (Error_Body__c)", "metadata": {"type": "textarea"}},
+                                                            {"name": "error_Code__c", "type": "text", "label": "Error Code (Error_Code__c)", "metadata": {"type": "string"}},
+                                                            {"name": "lead__c", "type": "select", "label": "Lead (Lead__c)", "metadata": {"type": "reference"}, "mode": "edit"},
+                                                            {"name": "request_ID__c", "type": "text", "label": "Request ID (Request_ID__c)", "metadata": {"type": "string"}},
+                                                            {"name": "scenario_Run_ID__c", "type": "text", "label": "Scenario Run ID (Scenario_Run_ID__c)", "metadata": {"type": "string"}}
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": 15,
+                            "module": "salesforce:updateARecord",
+                            "version": 3,
+                            "parameters": {
+                                "__IMTCONN__": 0
+                            },
+                            "mapper": {
+                                "sObject": "Lead",
+                                "record": "{{1.Id}}",
+                                "fields": {
+                                    "custom_fields": {
+                                        "aI_Candidate_Summary__c": "{{10.body.content[].input.summary}}",
+                                        "aI_Last_Updated__c": "{{now}}",
+                                        "aI_Prompt_Version__c": "v2026-04-19-a-triage"
+                                    }
+                                }
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": -450
+                                },
+                                "restore": {
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "label": "<SF_CONNECTION>",
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "salesforce"
+                                            }
+                                        }
+                                    },
+                                    "expect": {
+                                        "sObject": {
+                                            "label": "Lead"
+                                        },
+                                        "fields": {
+                                            "nested": {
+                                                "custom_fields": {
+                                                    "nested": {
+                                                        "region__c": {"mode": "edit"},
+                                                        "german_Level__c": {"mode": "edit"}
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:salesforce,salesforce2",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {"name": "sObject", "type": "select", "label": "Type", "required": true},
+                                    {"name": "record", "type": "text", "label": "Record ID", "required": true},
+                                    {
+                                        "name": "fields",
+                                        "type": "collection",
+                                        "label": "Fields",
+                                        "spec": [
+                                            {
+                                                "name": "custom_fields",
+                                                "type": "collection",
+                                                "label": "Custom Fields",
+                                                "spec": [
+                                                    {"name": "aI_Candidate_Summary__c", "type": "text", "label": "AI Candidate Summary (AI_Candidate_Summary__c)", "metadata": {"type": "textarea"}},
+                                                    {"name": "aI_Last_Updated__c", "type": "date", "label": "AI Last Updated (AI_Last_Updated__c)", "metadata": {"type": "datetime"}},
+                                                    {"name": "aI_Prompt_Version__c", "type": "text", "label": "AI Prompt Version (AI_Prompt_Version__c)", "metadata": {"type": "string"}}
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        [
+                            {"a": "{{1.Job_Title__c}}", "o": "exist"},
+                            {"a": "{{1.Region__c}}", "o": "exist"},
+                            {"a": "{{1.AI_Candidate_Summary__c}}", "o": "notexist"}
+                        ]
+                    ]
+                },
+                {
+                    "merge": false,
+                    "disabled": false,
+                    "label": "",
+                    "type": "else",
+                    "flow": [
+                        {
+                            "id": 9,
+                            "module": "placeholder:Placeholder",
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": 300
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": false,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "us2.make.com",
+        "notes": []
+    }
+}
