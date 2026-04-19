@@ -1,22 +1,11 @@
 {
-    "name": "Integration Salesforce",
     "flow": [
         {
             "id": 1,
+            "mapper": {},
             "module": "salesforce:watchRecords",
             "version": 3,
-            "parameters": {
-                "limit": 10,
-                "select": "create",
-                "sObject": "Lead",
-                "__IMTCONN__": 0
-            },
-            "mapper": {},
             "metadata": {
-                "designer": {
-                    "x": 0,
-                    "y": 0
-                },
                 "restore": {
                     "parameters": {
                         "select": {
@@ -34,6 +23,374 @@
                         }
                     }
                 },
+                "designer": {
+                    "x": 0,
+                    "y": 300
+                },
+                "interface": [
+                    {
+                        "name": "Id",
+                        "type": "text",
+                        "label": "Lead ID"
+                    },
+                    {
+                        "name": "IsDeleted",
+                        "type": "boolean",
+                        "label": "Deleted"
+                    },
+                    {
+                        "name": "MasterRecordId",
+                        "type": "text",
+                        "label": "Master Record ID"
+                    },
+                    {
+                        "name": "LastName",
+                        "type": "text",
+                        "label": "Last Name"
+                    },
+                    {
+                        "name": "FirstName",
+                        "type": "text",
+                        "label": "First Name"
+                    },
+                    {
+                        "name": "Salutation",
+                        "type": "text",
+                        "label": "Salutation"
+                    },
+                    {
+                        "name": "Name",
+                        "type": "text",
+                        "label": "Full Name"
+                    },
+                    {
+                        "name": "Title",
+                        "type": "text",
+                        "label": "Title"
+                    },
+                    {
+                        "name": "Company",
+                        "type": "text",
+                        "label": "Company"
+                    },
+                    {
+                        "name": "Street",
+                        "type": "text",
+                        "label": "Street"
+                    },
+                    {
+                        "name": "City",
+                        "type": "text",
+                        "label": "City"
+                    },
+                    {
+                        "name": "State",
+                        "type": "text",
+                        "label": "State/Province"
+                    },
+                    {
+                        "name": "PostalCode",
+                        "type": "text",
+                        "label": "Zip/Postal Code"
+                    },
+                    {
+                        "name": "Country",
+                        "type": "text",
+                        "label": "Country"
+                    },
+                    {
+                        "name": "StateCode",
+                        "type": "text",
+                        "label": "State/Province Code"
+                    },
+                    {
+                        "name": "CountryCode",
+                        "type": "text",
+                        "label": "Country Code"
+                    },
+                    {
+                        "name": "Latitude",
+                        "type": "number",
+                        "label": "Latitude"
+                    },
+                    {
+                        "name": "Longitude",
+                        "type": "number",
+                        "label": "Longitude"
+                    },
+                    {
+                        "name": "GeocodeAccuracy",
+                        "type": "text",
+                        "label": "Geocode Accuracy"
+                    },
+                    {
+                        "name": "Address",
+                        "spec": [
+                            {
+                                "name": "street",
+                                "type": "text",
+                                "label": "Street"
+                            },
+                            {
+                                "name": "country",
+                                "type": "text",
+                                "label": "Country"
+                            },
+                            {
+                                "name": "countryCode",
+                                "type": "text",
+                                "label": "Country code"
+                            },
+                            {
+                                "name": "latitude",
+                                "type": "number",
+                                "label": "Latitude"
+                            },
+                            {
+                                "name": "longitude",
+                                "type": "number",
+                                "label": "Longitude"
+                            },
+                            {
+                                "name": "postalCode",
+                                "type": "text",
+                                "label": "Postal code"
+                            },
+                            {
+                                "name": "state",
+                                "type": "text",
+                                "label": "State"
+                            },
+                            {
+                                "name": "stateCode",
+                                "type": "text",
+                                "label": "State code"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Address"
+                    },
+                    {
+                        "name": "Phone",
+                        "type": "text",
+                        "label": "Phone"
+                    },
+                    {
+                        "name": "MobilePhone",
+                        "type": "text",
+                        "label": "Mobile Phone"
+                    },
+                    {
+                        "name": "Fax",
+                        "type": "text",
+                        "label": "Fax"
+                    },
+                    {
+                        "name": "Email",
+                        "type": "email",
+                        "label": "Email"
+                    },
+                    {
+                        "name": "Website",
+                        "type": "url",
+                        "label": "Website"
+                    },
+                    {
+                        "name": "PhotoUrl",
+                        "type": "url",
+                        "label": "Photo URL"
+                    },
+                    {
+                        "name": "Description",
+                        "type": "text",
+                        "label": "Description"
+                    },
+                    {
+                        "name": "LeadSource",
+                        "type": "text",
+                        "label": "Lead Source"
+                    },
+                    {
+                        "name": "Status",
+                        "type": "text",
+                        "label": "Status"
+                    },
+                    {
+                        "name": "Industry",
+                        "type": "text",
+                        "label": "Industry"
+                    },
+                    {
+                        "name": "Rating",
+                        "type": "text",
+                        "label": "Rating"
+                    },
+                    {
+                        "name": "AnnualRevenue",
+                        "type": "number",
+                        "label": "Annual Revenue"
+                    },
+                    {
+                        "name": "NumberOfEmployees",
+                        "type": "number",
+                        "label": "Employees"
+                    },
+                    {
+                        "name": "OwnerId",
+                        "type": "text",
+                        "label": "Owner ID"
+                    },
+                    {
+                        "name": "IsConverted",
+                        "type": "boolean",
+                        "label": "Converted"
+                    },
+                    {
+                        "name": "ConvertedDate",
+                        "type": "date",
+                        "label": "Converted Date"
+                    },
+                    {
+                        "name": "ConvertedAccountId",
+                        "type": "text",
+                        "label": "Converted Account ID"
+                    },
+                    {
+                        "name": "ConvertedContactId",
+                        "type": "text",
+                        "label": "Converted Contact ID"
+                    },
+                    {
+                        "name": "ConvertedOpportunityId",
+                        "type": "text",
+                        "label": "Converted Opportunity ID"
+                    },
+                    {
+                        "name": "IsUnreadByOwner",
+                        "type": "boolean",
+                        "label": "Unread By Owner"
+                    },
+                    {
+                        "name": "CreatedDate",
+                        "type": "date",
+                        "label": "Created Date"
+                    },
+                    {
+                        "name": "CreatedById",
+                        "type": "text",
+                        "label": "Created By ID"
+                    },
+                    {
+                        "name": "LastModifiedDate",
+                        "type": "date",
+                        "label": "Last Modified Date"
+                    },
+                    {
+                        "name": "LastModifiedById",
+                        "type": "text",
+                        "label": "Last Modified By ID"
+                    },
+                    {
+                        "name": "SystemModstamp",
+                        "type": "date",
+                        "label": "System Modstamp"
+                    },
+                    {
+                        "name": "LastActivityDate",
+                        "type": "date",
+                        "label": "Last Activity"
+                    },
+                    {
+                        "name": "LastViewedDate",
+                        "type": "date",
+                        "label": "Last Viewed Date"
+                    },
+                    {
+                        "name": "LastReferencedDate",
+                        "type": "date",
+                        "label": "Last Referenced Date"
+                    },
+                    {
+                        "name": "Jigsaw",
+                        "type": "text",
+                        "label": "Data.com Key"
+                    },
+                    {
+                        "name": "JigsawContactId",
+                        "type": "text",
+                        "label": "Jigsaw Contact ID"
+                    },
+                    {
+                        "name": "CleanStatus",
+                        "type": "text",
+                        "label": "Clean Status"
+                    },
+                    {
+                        "name": "CompanyDunsNumber",
+                        "type": "text",
+                        "label": "Company D-U-N-S Number"
+                    },
+                    {
+                        "name": "DandbCompanyId",
+                        "type": "text",
+                        "label": "D&B Company ID"
+                    },
+                    {
+                        "name": "EmailBouncedReason",
+                        "type": "text",
+                        "label": "Email Bounced Reason"
+                    },
+                    {
+                        "name": "EmailBouncedDate",
+                        "type": "date",
+                        "label": "Email Bounced Date"
+                    },
+                    {
+                        "name": "IndividualId",
+                        "type": "text",
+                        "label": "Individual ID"
+                    },
+                    {
+                        "name": "SICCode__c",
+                        "type": "text",
+                        "label": "SIC Code"
+                    },
+                    {
+                        "name": "ProductInterest__c",
+                        "type": "text",
+                        "label": "Product Interest"
+                    },
+                    {
+                        "name": "Primary__c",
+                        "type": "text",
+                        "label": "Primary"
+                    },
+                    {
+                        "name": "CurrentGenerators__c",
+                        "type": "text",
+                        "label": "Current Generator(s)"
+                    },
+                    {
+                        "name": "NumberofLocations__c",
+                        "type": "number",
+                        "label": "Number of Locations"
+                    },
+                    {
+                        "name": "AI_Candidate_Summary__c",
+                        "type": "text",
+                        "label": "AI Candidate Summary"
+                    },
+                    {
+                        "name": "AI_Last_Updated__c",
+                        "type": "date",
+                        "label": "AI Last Updated"
+                    },
+                    {
+                        "name": "AI_Prompt_Version__c",
+                        "type": "text",
+                        "label": "AI Prompt Version"
+                    }
+                ],
                 "parameters": [
                     {
                         "name": "__IMTCONN__",
@@ -65,184 +422,127 @@
                         "label": "Limit",
                         "required": true
                     }
-                ],
-                "interface": [
-                    {"name": "Id", "type": "text", "label": "Lead ID"},
-                    {"name": "FirstName", "type": "text", "label": "First Name"},
-                    {"name": "LastName", "type": "text", "label": "Last Name"},
-                    {"name": "Title", "type": "text", "label": "Title"},
-                    {"name": "Company", "type": "text", "label": "Company"},
-                    {"name": "Country", "type": "text", "label": "Country"},
-                    {"name": "LeadSource", "type": "text", "label": "Lead Source"},
-                    {"name": "Status", "type": "text", "label": "Status"},
-                    {"name": "CreatedDate", "type": "date", "label": "Created Date"},
-                    {"name": "AI_Candidate_Summary__c", "type": "text", "label": "AI Candidate Summary"},
-                    {"name": "AI_Last_Updated__c", "type": "date", "label": "AI Last Updated"},
-                    {"name": "AI_Prompt_Version__c", "type": "text", "label": "AI Prompt Version"},
-                    {"name": "Job_Title__c", "type": "text", "label": "Job Title"},
-                    {"name": "Region__c", "type": "text", "label": "Region"},
-                    {"name": "Years_Experience__c", "type": "number", "label": "Years Experience"},
-                    {"name": "Skills__c", "type": "text", "label": "Skills"},
-                    {"name": "Availability_Weeks__c", "type": "number", "label": "Availability (Weeks)"},
-                    {"name": "German_Level__c", "type": "text", "label": "German Level"}
                 ]
+            },
+            "parameters": {
+                "limit": 10,
+                "select": "create",
+                "sObject": "Lead",
+                "__IMTCONN__": 0
             }
         },
         {
             "id": 8,
+            "mapper": null,
             "module": "builtin:BasicIfElse",
             "version": 1,
-            "mapper": null,
-            "metadata": {
-                "designer": {
-                    "x": 300,
-                    "y": 0
-                }
-            },
             "branches": [
                 {
-                    "merge": false,
-                    "label": "Required inputs present",
-                    "type": "condition",
                     "flow": [
                         {
                             "id": 10,
-                            "module": "anthropic-claude:makeAnApiCall",
-                            "version": 1,
-                            "parameters": {
-                                "__IMTCONN__": 0
-                            },
                             "mapper": {
                                 "url": "/v1/messages",
+                                "body": "{\"model\":\"claude-haiku-4-5\",\"max_tokens\":1024,\"temperature\":0.3,\"system\":\"You help Recruiting Now account managers triage new job applicants from regional job portals in southern Germany. Generate a short internal triage summary (2-3 sentences, max 1900 chars, professional English, third person, no markdown, no bullets, no first-person) that lets a recruiter decide in 5 seconds whether to prioritize, queue, or decline. Weigh in this order: (1) fit between current background and applied role, (2) regional fit via source portal, (3) practical constraints (German language is important for Mittelstand SMEs; B2 or below is a constraint; plus notice period), (4) red flags or data gaps. Say 'not specified' when data is missing. Neutral, factual, no sales language, do not sugar-coat mismatches. Call the save_candidate_summary tool only. No other output.\",\"tools\":[{\"name\":\"save_candidate_summary\",\"description\":\"Save a triage summary to the CRM.\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"summary\":{\"type\":\"string\",\"description\":\"2-3 sentence triage summary, max 1900 chars, third person, no markdown.\"}},\"required\":[\"summary\"]}}],\"tool_choice\":{\"type\":\"tool\",\"name\":\"save_candidate_summary\"},\"messages\":[{\"role\":\"user\",\"content\":\"Generate a triage summary. Name: {{1.FirstName}} {{1.LastName}}. Current role: {{1.Title}} at {{1.Company}}. Experience: {{1.Years_Experience__c}} years. Skills: {{1.Skills__c}}. Availability: {{1.Availability_Weeks__c}} weeks. German level: {{1.German_Level__c}}. Applied for: {{1.Job_Title__c}} via {{1.Region__c}} portal.\"}]}",
                                 "method": "POST",
                                 "headers": [
                                     {
                                         "key": "Content-Type",
                                         "value": "application/json"
                                     }
-                                ],
-                                "body": "{\"model\":\"claude-haiku-4-5\",\"max_tokens\":1024,\"temperature\":0.3,\"system\":\"You help Recruiting Now account managers triage new job applicants from regional job portals in southern Germany. Generate a short internal triage summary (2-3 sentences, max 1900 chars, professional English, third person, no markdown, no bullets, no first-person) that lets a recruiter decide in 5 seconds whether to prioritize, queue, or decline. Weigh in this order: (1) fit between current background and applied role, (2) regional fit via source portal, (3) practical constraints (German language is important for Mittelstand SMEs; B2 or below is a constraint; plus notice period), (4) red flags or data gaps. Say 'not specified' when data is missing. Neutral, factual, no sales language, do not sugar-coat mismatches. Call the save_candidate_summary tool only. No other output.\",\"tools\":[{\"name\":\"save_candidate_summary\",\"description\":\"Save a triage summary to the CRM.\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"summary\":{\"type\":\"string\",\"description\":\"2-3 sentence triage summary, max 1900 chars, third person, no markdown.\"}},\"required\":[\"summary\"]}}],\"tool_choice\":{\"type\":\"tool\",\"name\":\"save_candidate_summary\"},\"messages\":[{\"role\":\"user\",\"content\":\"Generate a triage summary. Name: {{1.FirstName}} {{1.LastName}}. Current role: {{1.Title}} at {{1.Company}}. Experience: {{1.Years_Experience__c}} years. Skills: {{1.Skills__c}}. Availability: {{1.Availability_Weeks__c}} weeks. German level: {{1.German_Level__c}}. Applied for: {{1.Job_Title__c}} via {{1.Region__c}} portal.\"}]}"
-                            },
-                            "metadata": {
-                                "designer": {
-                                    "x": 600,
-                                    "y": -300
-                                },
-                                "restore": {
-                                    "parameters": {
-                                        "__IMTCONN__": {
-                                            "label": "<ANTHROPIC_CONNECTION>",
-                                            "data": {
-                                                "scoped": "true",
-                                                "connection": "anthropic-claude"
-                                            }
-                                        }
-                                    },
-                                    "expect": {
-                                        "method": {
-                                            "mode": "chose",
-                                            "label": "POST"
-                                        },
-                                        "headers": {
-                                            "mode": "chose",
-                                            "items": [
-                                                null
-                                            ]
-                                        },
-                                        "qs": {
-                                            "mode": "chose"
-                                        }
-                                    }
-                                },
-                                "parameters": [
-                                    {
-                                        "name": "__IMTCONN__",
-                                        "type": "account:anthropic-claude",
-                                        "label": "Connection",
-                                        "required": true
-                                    }
-                                ],
-                                "expect": [
-                                    {"name": "url", "type": "text", "label": "URL", "required": true},
-                                    {
-                                        "name": "method",
-                                        "type": "select",
-                                        "label": "Method",
-                                        "required": true,
-                                        "validate": {
-                                            "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
-                                        }
-                                    },
-                                    {
-                                        "name": "headers",
-                                        "type": "array",
-                                        "label": "Headers",
-                                        "spec": {
-                                            "spec": [
-                                                {"name": "key", "type": "text", "label": "Key"},
-                                                {"name": "value", "type": "text", "label": "Value"}
-                                            ],
-                                            "type": "collection",
-                                            "label": "Header",
-                                            "name": "value"
-                                        }
-                                    },
-                                    {
-                                        "name": "qs",
-                                        "type": "array",
-                                        "label": "Query String",
-                                        "spec": {
-                                            "spec": [
-                                                {"name": "key", "type": "text", "label": "Key"},
-                                                {"name": "value", "type": "text", "label": "Value"}
-                                            ],
-                                            "type": "collection",
-                                            "label": "Parameter",
-                                            "name": "value"
-                                        }
-                                    },
-                                    {"name": "body", "type": "any", "label": "Body"}
                                 ]
                             },
+                            "module": "anthropic-claude:makeAnApiCall",
                             "onerror": [
                                 {
-                                    "id": 17,
-                                    "module": "salesforce:createAResponsibleRecord",
-                                    "version": 3,
-                                    "parameters": {
-                                        "__IMTCONN__": 0
-                                    },
+                                    "id": 26,
                                     "mapper": {
-                                        "sObject": "AI_Integration_Log__c",
                                         "fields": {
                                             "custom_fields": {
-                                                "error_Body__c": "{{10.error.message}}",
-                                                "error_Code__c": " ",
                                                 "lead__c": "{{1.Id}}",
-                                                "request_ID__c": "{{executionUUID}}-{{1.Id}}",
-                                                "scenario_Run_ID__c": "{{executionUUID}}       "
+                                                "error_Body__c": "{{10.error.message}}",
+                                                "request_ID__c": " {{executionUUID}}-{{1.}}{{Lead}}{{ID}} ",
+                                                "scenario_Run_ID__c": "{{executionUUID}}"
                                             }
-                                        }
-                                    },
-                                    "metadata": {
-                                        "designer": {
-                                            "x": 900,
-                                            "y": -150
                                         },
-                                        "restore": {
-                                            "parameters": {
-                                                "__IMTCONN__": {
-                                                    "label": "<SF_CONNECTION>",
-                                                    "data": {
-                                                        "scoped": "true",
-                                                        "connection": "salesforce"
-                                                    }
-                                                }
+                                        "sObject": "AI_Integration_Log__c"
+                                    },
+                                    "module": "salesforce:createAResponsibleRecord",
+                                    "version": 3,
+                                    "metadata": {
+                                        "expect": [
+                                            {
+                                                "name": "sObject",
+                                                "type": "select",
+                                                "label": "Type",
+                                                "required": true
                                             },
+                                            {
+                                                "name": "fields",
+                                                "spec": [
+                                                    {
+                                                        "name": "ownerId",
+                                                        "type": "text",
+                                                        "label": "Owner ID (OwnerId)",
+                                                        "metadata": {
+                                                            "type": "reference"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "custom_fields",
+                                                        "spec": [
+                                                            {
+                                                                "name": "error_Body__c",
+                                                                "type": "text",
+                                                                "label": "Error Body (Error_Body__c)",
+                                                                "metadata": {
+                                                                    "type": "textarea"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "error_Code__c",
+                                                                "type": "text",
+                                                                "label": "Error Code (Error_Code__c)",
+                                                                "metadata": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            {
+                                                                "mode": "edit",
+                                                                "name": "lead__c",
+                                                                "type": "select",
+                                                                "label": "Lead (Lead__c)",
+                                                                "metadata": {
+                                                                    "type": "reference"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "request_ID__c",
+                                                                "type": "text",
+                                                                "label": "Request ID (Request_ID__c)",
+                                                                "metadata": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "scenario_Run_ID__c",
+                                                                "type": "text",
+                                                                "label": "Scenario Run ID (Scenario_Run_ID__c)",
+                                                                "metadata": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "type": "collection",
+                                                        "label": "Custom Fields"
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Fields"
+                                            }
+                                        ],
+                                        "restore": {
                                             "expect": {
-                                                "sObject": {
-                                                    "label": "AI Integration Log"
-                                                },
                                                 "fields": {
                                                     "nested": {
                                                         "custom_fields": {
@@ -253,8 +553,24 @@
                                                             }
                                                         }
                                                     }
+                                                },
+                                                "sObject": {
+                                                    "label": "AI Integration Log"
+                                                }
+                                            },
+                                            "parameters": {
+                                                "__IMTCONN__": {
+                                                    "data": {
+                                                        "scoped": "true",
+                                                        "connection": "salesforce"
+                                                    },
+                                                    "label": "<SF_CONNECTION>"
                                                 }
                                             }
+                                        },
+                                        "designer": {
+                                            "x": 857,
+                                            "y": 283
                                         },
                                         "parameters": [
                                             {
@@ -263,82 +579,735 @@
                                                 "label": "Connection",
                                                 "required": true
                                             }
-                                        ],
-                                        "expect": [
-                                            {"name": "sObject", "type": "select", "label": "Type", "required": true},
-                                            {
-                                                "name": "fields",
-                                                "type": "collection",
-                                                "label": "Fields",
-                                                "spec": [
-                                                    {"name": "ownerId", "type": "text", "label": "Owner ID (OwnerId)", "metadata": {"type": "reference"}},
-                                                    {
-                                                        "name": "custom_fields",
-                                                        "type": "collection",
-                                                        "label": "Custom Fields",
-                                                        "spec": [
-                                                            {"name": "error_Body__c", "type": "text", "label": "Error Body (Error_Body__c)", "metadata": {"type": "textarea"}},
-                                                            {"name": "error_Code__c", "type": "text", "label": "Error Code (Error_Code__c)", "metadata": {"type": "string"}},
-                                                            {"name": "lead__c", "type": "select", "label": "Lead (Lead__c)", "metadata": {"type": "reference"}, "mode": "edit"},
-                                                            {"name": "request_ID__c", "type": "text", "label": "Request ID (Request_ID__c)", "metadata": {"type": "string"}},
-                                                            {"name": "scenario_Run_ID__c", "type": "text", "label": "Scenario Run ID (Scenario_Run_ID__c)", "metadata": {"type": "string"}}
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": 0
                                     }
+                                },
+                                {
+                                    "id": 25,
+                                    "mapper": {
+                                        "count": "3",
+                                        "retry": true,
+                                        "interval": "15"
+                                    },
+                                    "module": "builtin:Break",
+                                    "version": 1,
+                                    "metadata": {
+                                        "expect": [
+                                            {
+                                                "name": "retry",
+                                                "type": "boolean",
+                                                "label": "Automatically complete execution",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "count",
+                                                "type": "uinteger",
+                                                "label": "Number of attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 10000,
+                                                    "min": 1
+                                                }
+                                            },
+                                            {
+                                                "name": "interval",
+                                                "type": "uinteger",
+                                                "label": "Interval between attempts",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 44640,
+                                                    "min": 1
+                                                }
+                                            }
+                                        ],
+                                        "restore": {
+                                            "expect": {
+                                                "retry": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "designer": {
+                                            "x": 1148,
+                                            "y": 431
+                                        }
+                                    },
+                                    "parameters": {}
                                 }
-                            ]
+                            ],
+                            "version": 1,
+                            "metadata": {
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "text",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "GET",
+                                                "POST",
+                                                "PUT",
+                                                "PATCH",
+                                                "DELETE"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": {
+                                            "name": "value",
+                                            "spec": [
+                                                {
+                                                    "name": "key",
+                                                    "type": "text",
+                                                    "label": "Key"
+                                                },
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Value"
+                                                }
+                                            ],
+                                            "type": "collection",
+                                            "label": "Header"
+                                        },
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": {
+                                            "name": "value",
+                                            "spec": [
+                                                {
+                                                    "name": "key",
+                                                    "type": "text",
+                                                    "label": "Key"
+                                                },
+                                                {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Value"
+                                                }
+                                            ],
+                                            "type": "collection",
+                                            "label": "Parameter"
+                                        },
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "body",
+                                        "type": "any",
+                                        "label": "Body"
+                                    }
+                                ],
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose"
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "POST"
+                                        },
+                                        "headers": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null
+                                            ]
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "anthropic-claude"
+                                            },
+                                            "label": "<ANTHROPIC_CONNECTION>"
+                                        }
+                                    }
+                                },
+                                "designer": {
+                                    "x": 600,
+                                    "y": 150
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:anthropic-claude",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ]
+                            },
+                            "parameters": {
+                                "__IMTCONN__": 0
+                            }
                         },
                         {
                             "id": 15,
-                            "module": "salesforce:updateARecord",
-                            "version": 3,
-                            "parameters": {
-                                "__IMTCONN__": 0
-                            },
                             "mapper": {
-                                "sObject": "Lead",
-                                "record": "{{1.Id}}",
                                 "fields": {
                                     "custom_fields": {
-                                        "aI_Candidate_Summary__c": "{{10.body.content[].input.summary}}",
                                         "aI_Last_Updated__c": "{{now}}",
-                                        "aI_Prompt_Version__c": "v2026-04-19-a-triage"
+                                        "aI_Prompt_Version__c": "v2026-04-19-a-triage",
+                                        "aI_Candidate_Summary__c": "{{10.body.content[].input.summary}}"
                                     }
-                                }
-                            },
-                            "metadata": {
-                                "designer": {
-                                    "x": 900,
-                                    "y": -450
                                 },
+                                "record": "{{1.Id}}",
+                                "sObject": "Lead"
+                            },
+                            "module": "salesforce:updateARecord",
+                            "version": 3,
+                            "metadata": {
+                                "expect": [
+                                    {
+                                        "name": "sObject",
+                                        "type": "select",
+                                        "label": "Type",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "record",
+                                        "type": "text",
+                                        "label": "Record ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "fields",
+                                        "spec": [
+                                            {
+                                                "name": "lastName",
+                                                "type": "text",
+                                                "label": "Last Name (LastName)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "firstName",
+                                                "type": "text",
+                                                "label": "First Name (FirstName)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "salutation",
+                                                "type": "select",
+                                                "label": "Salutation (Salutation)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "title",
+                                                "type": "text",
+                                                "label": "Title (Title)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "company",
+                                                "type": "text",
+                                                "label": "Company (Company)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "street",
+                                                "type": "text",
+                                                "label": "Street (Street)",
+                                                "metadata": {
+                                                    "type": "textarea"
+                                                }
+                                            },
+                                            {
+                                                "name": "city",
+                                                "type": "text",
+                                                "label": "City (City)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "state",
+                                                "type": "text",
+                                                "label": "State/Province (State)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "postalCode",
+                                                "type": "text",
+                                                "label": "Zip/Postal Code (PostalCode)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "country",
+                                                "type": "text",
+                                                "label": "Country (Country)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "stateCode",
+                                                "type": "select",
+                                                "label": "State/Province Code (StateCode)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "countryCode",
+                                                "type": "select",
+                                                "label": "Country Code (CountryCode)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "latitude",
+                                                "type": "number",
+                                                "label": "Latitude (Latitude)",
+                                                "metadata": {
+                                                    "type": "double"
+                                                }
+                                            },
+                                            {
+                                                "name": "longitude",
+                                                "type": "number",
+                                                "label": "Longitude (Longitude)",
+                                                "metadata": {
+                                                    "type": "double"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "geocodeAccuracy",
+                                                "type": "select",
+                                                "label": "Geocode Accuracy (GeocodeAccuracy)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "phone",
+                                                "type": "text",
+                                                "label": "Phone (Phone)",
+                                                "metadata": {
+                                                    "type": "phone"
+                                                }
+                                            },
+                                            {
+                                                "name": "mobilePhone",
+                                                "type": "text",
+                                                "label": "Mobile Phone (MobilePhone)",
+                                                "metadata": {
+                                                    "type": "phone"
+                                                }
+                                            },
+                                            {
+                                                "name": "fax",
+                                                "type": "text",
+                                                "label": "Fax (Fax)",
+                                                "metadata": {
+                                                    "type": "phone"
+                                                }
+                                            },
+                                            {
+                                                "name": "email",
+                                                "type": "email",
+                                                "label": "Email (Email)",
+                                                "metadata": {
+                                                    "type": "email"
+                                                }
+                                            },
+                                            {
+                                                "name": "website",
+                                                "type": "url",
+                                                "label": "Website (Website)",
+                                                "metadata": {
+                                                    "type": "url"
+                                                }
+                                            },
+                                            {
+                                                "name": "description",
+                                                "type": "text",
+                                                "label": "Description (Description)",
+                                                "metadata": {
+                                                    "type": "textarea"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "leadSource",
+                                                "type": "select",
+                                                "label": "Lead Source (LeadSource)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "status",
+                                                "type": "select",
+                                                "label": "Status (Status)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "industry",
+                                                "type": "select",
+                                                "label": "Industry (Industry)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "rating",
+                                                "type": "select",
+                                                "label": "Rating (Rating)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "annualRevenue",
+                                                "type": "number",
+                                                "label": "Annual Revenue (AnnualRevenue)",
+                                                "metadata": {
+                                                    "type": "currency"
+                                                }
+                                            },
+                                            {
+                                                "name": "numberOfEmployees",
+                                                "type": "number",
+                                                "label": "Employees (NumberOfEmployees)",
+                                                "metadata": {
+                                                    "type": "int"
+                                                }
+                                            },
+                                            {
+                                                "name": "ownerId",
+                                                "type": "text",
+                                                "label": "Owner ID (OwnerId)",
+                                                "metadata": {
+                                                    "type": "reference"
+                                                }
+                                            },
+                                            {
+                                                "name": "isConverted",
+                                                "type": "boolean",
+                                                "label": "Converted (IsConverted)",
+                                                "metadata": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            {
+                                                "name": "isUnreadByOwner",
+                                                "type": "boolean",
+                                                "label": "Unread By Owner (IsUnreadByOwner)",
+                                                "metadata": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            {
+                                                "name": "jigsaw",
+                                                "type": "text",
+                                                "label": "Data.com Key (Jigsaw)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "cleanStatus",
+                                                "type": "select",
+                                                "label": "Clean Status (CleanStatus)",
+                                                "metadata": {
+                                                    "type": "picklist"
+                                                }
+                                            },
+                                            {
+                                                "name": "companyDunsNumber",
+                                                "type": "text",
+                                                "label": "Company D-U-N-S Number (CompanyDunsNumber)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "dandbCompanyId",
+                                                "type": "select",
+                                                "label": "D&B Company ID (DandbCompanyId)",
+                                                "metadata": {
+                                                    "type": "reference"
+                                                }
+                                            },
+                                            {
+                                                "name": "emailBouncedReason",
+                                                "type": "text",
+                                                "label": "Email Bounced Reason (EmailBouncedReason)",
+                                                "metadata": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            {
+                                                "name": "emailBouncedDate",
+                                                "type": "date",
+                                                "label": "Email Bounced Date (EmailBouncedDate)",
+                                                "metadata": {
+                                                    "type": "datetime"
+                                                }
+                                            },
+                                            {
+                                                "mode": "edit",
+                                                "name": "individualId",
+                                                "type": "select",
+                                                "label": "Individual ID (IndividualId)",
+                                                "metadata": {
+                                                    "type": "reference"
+                                                }
+                                            },
+                                            {
+                                                "name": "custom_fields",
+                                                "spec": [
+                                                    {
+                                                        "name": "sICCode__c",
+                                                        "type": "text",
+                                                        "label": "SIC Code (SICCode__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "productInterest__c",
+                                                        "type": "select",
+                                                        "label": "Product Interest (ProductInterest__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "primary__c",
+                                                        "type": "select",
+                                                        "label": "Primary (Primary__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "currentGenerators__c",
+                                                        "type": "text",
+                                                        "label": "Current Generator(s) (CurrentGenerators__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "numberofLocations__c",
+                                                        "type": "number",
+                                                        "label": "Number of Locations (NumberofLocations__c)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "aI_Candidate_Summary__c",
+                                                        "type": "text",
+                                                        "label": "AI Candidate Summary (AI_Candidate_Summary__c)",
+                                                        "metadata": {
+                                                            "type": "textarea"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "aI_Last_Updated__c",
+                                                        "type": "date",
+                                                        "label": "AI Last Updated (AI_Last_Updated__c)",
+                                                        "metadata": {
+                                                            "type": "datetime"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "aI_Prompt_Version__c",
+                                                        "type": "text",
+                                                        "label": "AI Prompt Version (AI_Prompt_Version__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "job_Title__c",
+                                                        "type": "text",
+                                                        "label": "Job Title (Job_Title__c)",
+                                                        "metadata": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "region__c",
+                                                        "type": "select",
+                                                        "label": "Region (Region__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "availability_Weeks__c",
+                                                        "type": "number",
+                                                        "label": "Availability (Weeks) (Availability_Weeks__c)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    },
+                                                    {
+                                                        "mode": "edit",
+                                                        "name": "german_Level__c",
+                                                        "type": "select",
+                                                        "label": "German Level (German_Level__c)",
+                                                        "metadata": {
+                                                            "type": "picklist"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "skills__c",
+                                                        "type": "text",
+                                                        "label": "Skills (Skills__c)",
+                                                        "metadata": {
+                                                            "type": "textarea"
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "years_Experience__c",
+                                                        "type": "number",
+                                                        "label": "Years Experience (Years_Experience__c)",
+                                                        "metadata": {
+                                                            "type": "double"
+                                                        }
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Custom Fields"
+                                            },
+                                            {
+                                                "name": "autoAssign",
+                                                "type": "boolean",
+                                                "label": "Salesforce Auto Assign"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Fields"
+                                    }
+                                ],
                                 "restore": {
+                                    "expect": {
+                                        "fields": {
+                                            "nested": {
+                                                "rating": {
+                                                    "mode": "edit"
+                                                },
+                                                "status": {
+                                                    "mode": "edit"
+                                                },
+                                                "industry": {
+                                                    "mode": "edit"
+                                                },
+                                                "stateCode": {
+                                                    "mode": "edit"
+                                                },
+                                                "autoAssign": {
+                                                    "mode": "chose"
+                                                },
+                                                "leadSource": {
+                                                    "mode": "edit"
+                                                },
+                                                "salutation": {
+                                                    "mode": "edit"
+                                                },
+                                                "cleanStatus": {
+                                                    "mode": "edit"
+                                                },
+                                                "countryCode": {
+                                                    "mode": "edit"
+                                                },
+                                                "isConverted": {
+                                                    "mode": "chose"
+                                                },
+                                                "individualId": {
+                                                    "mode": "edit"
+                                                },
+                                                "custom_fields": {
+                                                    "nested": {
+                                                        "region__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "primary__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "german_Level__c": {
+                                                            "mode": "edit"
+                                                        },
+                                                        "productInterest__c": {
+                                                            "mode": "edit"
+                                                        }
+                                                    }
+                                                },
+                                                "dandbCompanyId": {
+                                                    "mode": "edit"
+                                                },
+                                                "geocodeAccuracy": {
+                                                    "mode": "edit"
+                                                },
+                                                "isUnreadByOwner": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "sObject": {
+                                            "label": "Lead"
+                                        }
+                                    },
                                     "parameters": {
                                         "__IMTCONN__": {
-                                            "label": "<SF_CONNECTION>",
                                             "data": {
                                                 "scoped": "true",
                                                 "connection": "salesforce"
-                                            }
-                                        }
-                                    },
-                                    "expect": {
-                                        "sObject": {
-                                            "label": "Lead"
-                                        },
-                                        "fields": {
-                                            "nested": {
-                                                "custom_fields": {
-                                                    "nested": {
-                                                        "region__c": {"mode": "edit"},
-                                                        "german_Level__c": {"mode": "edit"}
-                                                    }
-                                                }
-                                            }
+                                            },
+                                            "label": "<SF_CONNECTION>"
                                         }
                                     }
+                                },
+                                "designer": {
+                                    "x": 900,
+                                    "y": 0
                                 },
                                 "parameters": [
                                     {
@@ -347,79 +1316,233 @@
                                         "label": "Connection",
                                         "required": true
                                     }
-                                ],
-                                "expect": [
-                                    {"name": "sObject", "type": "select", "label": "Type", "required": true},
-                                    {"name": "record", "type": "text", "label": "Record ID", "required": true},
-                                    {
-                                        "name": "fields",
-                                        "type": "collection",
-                                        "label": "Fields",
-                                        "spec": [
-                                            {
-                                                "name": "custom_fields",
-                                                "type": "collection",
-                                                "label": "Custom Fields",
-                                                "spec": [
-                                                    {"name": "aI_Candidate_Summary__c", "type": "text", "label": "AI Candidate Summary (AI_Candidate_Summary__c)", "metadata": {"type": "textarea"}},
-                                                    {"name": "aI_Last_Updated__c", "type": "date", "label": "AI Last Updated (AI_Last_Updated__c)", "metadata": {"type": "datetime"}},
-                                                    {"name": "aI_Prompt_Version__c", "type": "text", "label": "AI Prompt Version (AI_Prompt_Version__c)", "metadata": {"type": "string"}}
-                                                ]
-                                            }
-                                        ]
-                                    }
                                 ]
+                            },
+                            "parameters": {
+                                "__IMTCONN__": 0
                             }
                         }
                     ],
+                    "type": "condition",
+                    "label": "Required inputs present",
+                    "merge": false,
                     "conditions": [
                         [
-                            {"a": "{{1.Job_Title__c}}", "o": "exist"},
-                            {"a": "{{1.Region__c}}", "o": "exist"},
-                            {"a": "{{1.AI_Candidate_Summary__c}}", "o": "notexist"}
+                            {
+                                "a": "{{1.Job_Title__c}}",
+                                "o": "exist"
+                            },
+                            {
+                                "a": "{{1.Region__c}}",
+                                "o": "exist"
+                            },
+                            {
+                                "a": "{{1.AI_Candidate_Summary__c}}",
+                                "o": "notexist"
+                            }
                         ]
                     ]
                 },
                 {
-                    "merge": false,
-                    "disabled": false,
-                    "label": "",
-                    "type": "else",
                     "flow": [
                         {
                             "id": 9,
+                            "filter": null,
                             "module": "placeholder:Placeholder",
                             "metadata": {
                                 "designer": {
                                     "x": 600,
-                                    "y": 300
+                                    "y": 600
                                 }
                             }
                         }
-                    ]
+                    ],
+                    "type": "else",
+                    "label": "",
+                    "merge": false,
+                    "disabled": false
                 }
-            ]
+            ],
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 300
+                }
+            }
         }
     ],
+    "name": "Integration Salesforce",
     "metadata": {
         "instant": false,
         "version": 1,
+        "designer": {
+            "orphans": [],
+            "samples": {
+                "1": {
+                    "Id": "00QdM00000btrsoUAA",
+                    "Fax": null,
+                    "City": null,
+                    "Name": "Klaus Becker",
+                    "Email": null,
+                    "Phone": null,
+                    "State": null,
+                    "Title": "DevOps Engineer",
+                    "Jigsaw": null,
+                    "Rating": null,
+                    "Status": "Open - Not Contacted",
+                    "Street": null,
+                    "Address": {
+                        "city": null,
+                        "state": null,
+                        "street": null,
+                        "country": "Germany",
+                        "latitude": null,
+                        "longitude": null,
+                        "stateCode": null,
+                        "postalCode": null,
+                        "countryCode": "DE",
+                        "geocodeAccuracy": null
+                    },
+                    "Company": "Black Forest Machinery GmbH",
+                    "Country": "Germany",
+                    "OwnerId": "005dM00000ZonUPQAZ",
+                    "Website": null,
+                    "Industry": null,
+                    "LastName": "Becker",
+                    "Latitude": null,
+                    "PhotoUrl": "/services/images/photo/00QdM00000btrsoUAA",
+                    "FirstName": "Klaus",
+                    "IsDeleted": false,
+                    "Longitude": null,
+                    "Region__c": "Schwarzwald",
+                    "Skills__c": "Kubernetes, Terraform, AWS, GitLab CI, Python, Ansible, Docker",
+                    "StateCode": null,
+                    "LeadSource": null,
+                    "PostalCode": null,
+                    "Primary__c": null,
+                    "SICCode__c": null,
+                    "Salutation": null,
+                    "CleanStatus": "Pending",
+                    "CountryCode": "DE",
+                    "CreatedById": "005dM00000ZonUPQAZ",
+                    "CreatedDate": "2026-04-19T14:37:47.000Z",
+                    "Description": null,
+                    "IsConverted": false,
+                    "MobilePhone": null,
+                    "IndividualId": null,
+                    "Job_Title__c": "Senior DevOps Engineer",
+                    "AnnualRevenue": null,
+                    "ConvertedDate": null,
+                    "DandbCompanyId": null,
+                    "LastViewedDate": "2026-04-19T15:32:44.000Z",
+                    "MasterRecordId": null,
+                    "SystemModstamp": "2026-04-19T15:32:43.000Z",
+                    "GeocodeAccuracy": null,
+                    "German_Level__c": "Native",
+                    "IsUnreadByOwner": false,
+                    "JigsawContactId": null,
+                    "EmailBouncedDate": null,
+                    "LastActivityDate": null,
+                    "LastModifiedById": "005dM00000ZonUPQAZ",
+                    "LastModifiedDate": "2026-04-19T15:32:43.000Z",
+                    "CompanyDunsNumber": null,
+                    "NumberOfEmployees": null,
+                    "AI_Last_Updated__c": null,
+                    "ConvertedAccountId": null,
+                    "ConvertedContactId": null,
+                    "EmailBouncedReason": null,
+                    "LastReferencedDate": "2026-04-19T15:32:44.000Z",
+                    "ProductInterest__c": null,
+                    "Years_Experience__c": 7,
+                    "AI_Prompt_Version__c": null,
+                    "CurrentGenerators__c": null,
+                    "NumberofLocations__c": null,
+                    "Availability_Weeks__c": 4,
+                    "ConvertedOpportunityId": null,
+                    "AI_Candidate_Summary__c": null
+                },
+                "10": {
+                    "body": {
+                        "id": "msg_01UJ34y4JJEeg5S7r24x517h",
+                        "role": "assistant",
+                        "type": "message",
+                        "model": "claude-haiku-4-5-20251001",
+                        "usage": {
+                            "input_tokens": 965,
+                            "service_tier": "standard",
+                            "inference_geo": "not_available",
+                            "output_tokens": 137,
+                            "cache_creation": {
+                                "ephemeral_1h_input_tokens": 0,
+                                "ephemeral_5m_input_tokens": 0
+                            },
+                            "cache_read_input_tokens": 0,
+                            "cache_creation_input_tokens": 0
+                        },
+                        "content": [
+                            {
+                                "id": "toolu_01PJNJHCCYtuWFRUsVpLyDiV",
+                                "name": "save_candidate_summary",
+                                "type": "tool_use",
+                                "input": {
+                                    "summary": "Klaus Becker is a native German speaker with 7 years of DevOps engineering experience at a regional ..."
+                                },
+                                "caller": {
+                                    "type": "direct"
+                                }
+                            }
+                        ],
+                        "stop_reason": "tool_use",
+                        "stop_details": null,
+                        "stop_sequence": null
+                    },
+                    "headers": {
+                        "date": "Sun, 19 Apr 2026 15:40:54 GMT",
+                        "vary": "Accept-Encoding",
+                        "cf-ray": "9eed029c8e0c394c-IAD",
+                        "server": "cloudflare",
+                        "connection": "close",
+                        "request-id": "req_011CaDPAQEsMxDQJaY7Tna4E",
+                        "set-cookie": [
+                            "_cfuvid=L7ir77DkTF1moRCdvOx4wLsDnMMx7v3ILLJ4ddEyKZQ-1776613252.5633402-1.0.1.1-zGQttJNzPcIq7vabdGc3v..."
+                        ],
+                        "content-type": "application/json",
+                        "x-robots-tag": "none",
+                        "server-timing": "x-originResponse;dur=1631",
+                        "cf-cache-status": "DYNAMIC",
+                        "transfer-encoding": "chunked",
+                        "content-security-policy": "default-src 'none'; frame-ancestors 'none'",
+                        "anthropic-organization-id": "e06e96cb-e50a-4767-b5d0-5c3fe5fff808",
+                        "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
+                        "x-envoy-upstream-service-time": "1629",
+                        "anthropic-ratelimit-tokens-limit": "540000",
+                        "anthropic-ratelimit-tokens-reset": "2026-04-19T15:40:53Z",
+                        "anthropic-ratelimit-requests-limit": "1000",
+                        "anthropic-ratelimit-requests-reset": "2026-04-19T15:40:52Z",
+                        "anthropic-ratelimit-tokens-remaining": "540000",
+                        "anthropic-ratelimit-input-tokens-limit": "450000",
+                        "anthropic-ratelimit-input-tokens-reset": "2026-04-19T15:40:53Z",
+                        "anthropic-ratelimit-requests-remaining": "999",
+                        "anthropic-ratelimit-output-tokens-limit": "90000",
+                        "anthropic-ratelimit-output-tokens-reset": "2026-04-19T15:40:54Z",
+                        "anthropic-ratelimit-input-tokens-remaining": "450000",
+                        "anthropic-ratelimit-output-tokens-remaining": "90000"
+                    },
+                    "statusCode": 200
+                }
+            }
+        },
         "scenario": {
-            "roundtrips": 1,
+            "dlq": true,
+            "slots": null,
+            "dataloss": false,
             "maxErrors": 3,
             "autoCommit": true,
-            "autoCommitTriggerLast": true,
-            "sequential": false,
-            "slots": null,
+            "roundtrips": 1,
+            "sequential": true,
             "confidential": false,
-            "dataloss": false,
-            "dlq": false,
-            "freshVariables": false
-        },
-        "designer": {
-            "orphans": []
-        },
-        "zone": "us2.make.com",
-        "notes": []
+            "freshVariables": false,
+            "autoCommitTriggerLast": true
+        }
     }
 }

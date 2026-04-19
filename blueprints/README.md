@@ -30,3 +30,14 @@ No API keys are present in this file.
 - On any Claude API error, writes a row to `AI_Integration_Log__c` with request ID, error body, and Lead reference — without touching the Lead's summary field
 
 See the main repo `README.md` for architecture and the `docs/change_log/` entry for prompt details + parameters.
+
+### Re-exporting from your own Make account
+
+The blueprint checked into this repo is auto-pulled from Make's REST API and redacted. To refresh it after making scenario changes:
+
+```bash
+# With .env configured (see .env.example):
+./scripts/make-pull-blueprint.sh
+```
+
+The script fetches from `/scenarios/{id}/blueprint`, replaces all connection IDs with `0`, replaces connection labels with `<SF_CONNECTION>` / `<ANTHROPIC_CONNECTION>`, and writes the result here. It refuses to write if any org URL or user name leaks through the redaction filter.
